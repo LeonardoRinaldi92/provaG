@@ -23,7 +23,7 @@
                             store.enemyMaxLife*= 1.1
                         }
                         store.coin = Math.round(store.coin + store.coinValue) 
-                        store.coinValue*=1.4
+                        store.coinValue*=1.1
                         if (store.ActualStage <= 9) {
                             store.ActualStage ++
                         }
@@ -50,7 +50,7 @@
                     else if(store.clickLevel % 10 == 0 ){
                         store.clickValue *= 1.5
                     }
-                    store.clickPrice = Math.round((store.clickPrice * 2 ) + (((store.clickPrice * 2) / 100) * 10))
+                    store.clickPrice = Math.round((store.clickPrice * 1.2 ) + (((store.clickPrice * 1.2) / 100) * 10))
                     
                 }
             }
