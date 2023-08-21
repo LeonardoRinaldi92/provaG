@@ -1,7 +1,11 @@
 <script>
     import { store } from '../store';
+    import Enemy from './Enemy.vue';
     export default {
         name: 'Field',
+        components: {
+            Enemy
+        },
         data() {
             return {
                 store,
@@ -11,7 +15,7 @@
         methods: {
             addCoin() {
                 if(this.disableAddCoin == false){
-                    store.coin  = store.coin + store.clickValue
+                    store.enemyLife  = store.enemyLife - store.clickValue
                 }
             },
             increaseClickValue() {
@@ -35,6 +39,9 @@
                         <h3>
                             coin : {{ store.coin }}
                         </h3>
+                    </div>
+                    <div>
+                        <Enemy/>
                     </div>
                 </div>
                 <div class="col-12 h-25" style="background-color: rgb(61, 129, 40);">
