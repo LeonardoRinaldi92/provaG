@@ -13,28 +13,31 @@
             }
         },
         methods: {
+            increaseEnemyLife(){
+                if(store.ActualStage == 9 ) {
+                    store.enemyMaxLife = store.enemyMaxLife * 6
+                }else if(store.ActualStage == 10){
+                    store.enemyMaxLife = store.enemyMaxLife/ 3
+                }else {
+                    store.enemyMaxLife*= 1.4
+                }
+                store.enemyMaxLife = Math.round(store.enemyMaxLife)
+                store.enemyLife = store.enemyMaxLife
+            },
             addCoin() {
                 if(this.disableAddCoin == false){
                     store.enemyLife  = store.enemyLife - store.clickValue
                     if(store.enemyLife <= 0 ) {
-                        if(store.ActualStage == 9 ) {
-                            store.enemyMaxLife = store.enemyMaxLife * 15
-                        }else {
-                            store.enemyMaxLife*= 1.1
-                        }
+                        this.increaseEnemyLife()
                         store.coin = Math.round(store.coin + store.coinValue) 
-                        store.coinValue*=1.1
+                        store.coinValue*=1.2
                         if (store.ActualStage <= 9) {
                             store.ActualStage ++
                         }
                         else {
                             store.ActualStage = 1
-                            store.enemyMaxLife = store.enemyMaxLife/ 3
-                            store.enemyLife = store.enemyMaxLife
                             store.AcutalFloor ++
                         }
-                        store.enemyMaxLife = Math.round(store.enemyMaxLife)
-                        store.enemyLife = store.enemyMaxLife
                     }
                 }
             },
@@ -43,7 +46,6 @@
                     store.coin = store.coin - store.clickPrice
                     store.clickLevel ++
                     store.clickValue ++
-
                     if(store.clickLevel % 25 == 0 ) {
                         store.clickValue *= 2
                     }
