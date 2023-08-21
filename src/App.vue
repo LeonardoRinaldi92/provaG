@@ -10,8 +10,9 @@ export default {
 </script>
 
 <template>
-  <h1>Ciao mondo</h1>
-  <Field/>
+  <div class="box-container">
+    <Field/>
+  </div>
 </template>
 
 <style lang="scss">

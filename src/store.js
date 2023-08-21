@@ -2,6 +2,7 @@ import { reactive } from "vue";
 
 export const store = reactive (
     {
-        prova: 1
+        coin: 0,
+        coinValue: 1 
     }
 )
