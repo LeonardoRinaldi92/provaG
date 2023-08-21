@@ -16,6 +16,10 @@
             addCoin() {
                 if(this.disableAddCoin == false){
                     store.enemyLife  = store.enemyLife - store.clickValue
+                    if(store.enemyLife <= 0 ) {
+                        store.enemyLife = store.enemyMaxLife
+                        store.coin = store.coin+10
+                    }
                 }
             },
             increaseClickValue() {
