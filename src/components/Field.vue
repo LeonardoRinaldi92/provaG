@@ -24,9 +24,12 @@
                 store.enemyMaxLife = Math.round(store.enemyMaxLife)
                 store.enemyLife = store.enemyMaxLife
             },
+            hitEnemy(){
+                store.enemyLife  = store.enemyLife - store.clickValue
+            },
             addCoin() {
                 if(this.disableAddCoin == false){
-                    store.enemyLife  = store.enemyLife - store.clickValue
+                    this.hitEnemy()
                     if(store.enemyLife <= 0 ) {
                         this.increaseEnemyLife()
                         store.coin = Math.round(store.coin + store.coinValue) 
