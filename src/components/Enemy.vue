@@ -13,6 +13,13 @@ export default {
             return {
                 width: `${percentage}%`
             };
+        },
+        isBoss(){
+            if (store.ActualStage === 10) {
+                return 'Boss'
+            }else {
+                return  'NoBoss'
+            }
         }
     }
 }
@@ -20,7 +27,7 @@ export default {
 
 <template>
     <div>
-        <div style="width: 200px; margin-bottom: 10px; height: 20px; border: 1px solid black; position: relative;">
+        <div style="width: 200px; margin-bottom: 10px; height: 20px; border: 1px solid; position: relative;"  >
             <div style="position: absolute; left: 50%; z-index: 3; top: 1px; font-size: 16px; line-height: 16px; height: 16px;"> 
                 {{ store.enemyLife }}
 
@@ -29,8 +36,21 @@ export default {
                 
             </div>
         </div>
-        <div style="height:300px;width: 200px; background-color: black;">
+        <div style="height:300px;width: 200px;" :class="isBoss">
 
         </div>
     </div>
 </template>
+
+<style lang="scss" scoped>
+
+.Boss{
+
+    background-color: black;
+}
+
+.NoBoss {
+    background-color: grey;
+}
+
+</style>
