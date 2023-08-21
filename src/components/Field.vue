@@ -5,11 +5,21 @@
         data() {
             return {
                 store,
+                disableAddCoin : false,
             }
         },
         methods: {
             addCoin() {
-                store.coin  = store.coin + store.coinValue
+                if(this.disableAddCoin == false){
+                    store.coin  = store.coin + store.clickValue
+                }
+            },
+            increaseClickValue() {
+                if (store.coin >= store.clickPrice) {
+                    store.coin = store.coin - store.clickPrice
+                    store.clickValue ++
+                    store.clickPrice = Math.round((store.clickPrice * 2 ) + (((store.clickPrice * 2) / 100) * 10))
+                }
             }
         }
     }
@@ -28,6 +38,18 @@
                     </div>
                 </div>
                 <div class="col-12 h-25" style="background-color: rgb(61, 129, 40);">
+                    <div class="row justify-content-center" id="azioni" @mouseenter="this.disableAddCoin = true" @mouseleave="this.disableAddCoin = false">
+                        <div class="col-6" style="cursor: pointer;" @click="increaseClickValue()" >
+                             <h3 :class="(store.coin >= store.clickPrice)? 'text-black' : 'text-danger' ">
+                                aumenta valore del click
+                             </h3>
+                             <h5>
+                                valore attuale {{ store.clickValue }} Prezzo {{ store.clickPrice }}
+                             </h5>
+
+                        </div>
+
+                    </div>
                 </div>
 
 
