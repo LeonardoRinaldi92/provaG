@@ -7,5 +7,7 @@ export const store = reactive (
         clickPrice : 25,
         enemyLife : 10,
         enemyMaxLife : 10,
+        ActualStage : 1,
+        AcutalFloor : 1,
     }
 )

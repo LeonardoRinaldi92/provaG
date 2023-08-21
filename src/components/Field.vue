@@ -17,8 +17,20 @@
                 if(this.disableAddCoin == false){
                     store.enemyLife  = store.enemyLife - store.clickValue
                     if(store.enemyLife <= 0 ) {
+                        if(store.ActualStage == 9 ) {
+                            store.enemyMaxLife = store.enemyMaxLife * 15
+                        }
                         store.enemyLife = store.enemyMaxLife
                         store.coin = store.coin+10
+                        if (store.ActualStage <= 9) {
+                            store.ActualStage ++
+                        }
+                        else {
+                            store.ActualStage = 1
+                            store.enemyMaxLife = store.enemyMaxLife/ 3
+                            store.enemyLife = store.enemyMaxLife
+                            store.AcutalFloor ++
+                        }
                     }
                 }
             },
@@ -40,6 +52,9 @@
             <div class="row h-100"  @click="addCoin()">
                 <div class="col-12 h-75" style="background-color: rgb(175, 201, 224);">
                     <div class="text-center">
+                        <h2>
+                            {{ store.AcutalFloor }} - {{ store.ActualStage }}
+                        </h2>
                         <h3>
                             coin : {{ store.coin }}
                         </h3>
