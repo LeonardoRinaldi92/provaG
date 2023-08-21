@@ -19,9 +19,11 @@
                     if(store.enemyLife <= 0 ) {
                         if(store.ActualStage == 9 ) {
                             store.enemyMaxLife = store.enemyMaxLife * 15
+                        }else {
+                            store.enemyMaxLife*= 1.1
                         }
-                        store.enemyLife = store.enemyMaxLife
-                        store.coin = store.coin+10
+                        store.coin = Math.round(store.coin + store.coinValue) 
+                        store.coinValue*=1.4
                         if (store.ActualStage <= 9) {
                             store.ActualStage ++
                         }
@@ -31,14 +33,25 @@
                             store.enemyLife = store.enemyMaxLife
                             store.AcutalFloor ++
                         }
+                        store.enemyMaxLife = Math.round(store.enemyMaxLife)
+                        store.enemyLife = store.enemyMaxLife
                     }
                 }
             },
             increaseClickValue() {
                 if (store.coin >= store.clickPrice) {
                     store.coin = store.coin - store.clickPrice
+                    store.clickLevel ++
                     store.clickValue ++
+
+                    if(store.clickLevel % 25 == 0 ) {
+                        store.clickValue *= 2
+                    }
+                    else if(store.clickLevel % 10 == 0 ){
+                        store.clickValue *= 1.5
+                    }
                     store.clickPrice = Math.round((store.clickPrice * 2 ) + (((store.clickPrice * 2) / 100) * 10))
+                    
                 }
             }
         }
