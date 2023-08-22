@@ -12,6 +12,7 @@ export const store = reactive (
         ActualStage : 1,
         AcutalFloor : 1,
         timer: 30,
+        totalDps : 0,
         allies : [
             {
                 name: 'pippo',

@@ -78,10 +78,13 @@
                 return price
             },
             levelUpAlly(ally){
+                let oldDps = ally.Dps
+                let addDps = null
                 if(!ally.unlocked){
                     if (store.coin >= ally.priceToBuy){
                         store.coin= store.coin - ally.priceToBuy
                         ally.unlocked = true
+                        store.totalDps += ally.Dps
                     }
                 }else {
                     if(store.coin >= ally.priceToLvlUp){
@@ -89,15 +92,15 @@
                         ally.actualLevel ++
                         ally.priceToLvlUp = Math.round( ally.priceToLvlUp * ally.increasePrice)
                         if(ally.actualLevel == 1){
-                            ally.Dps = Math.round(ally.startDps * ally.increaseDps)   
-                        }else {
-                            
+                            ally.Dps = Math.round(ally.startDps * ally.increaseDps)
+                               
+                        }else {                          
                             ally.Dps = Math.round(ally.Dps * ally.increaseDps)
-                            console.log('ciao')
                         }
+                        addDps = ally.Dps - oldDps
+                        store.totalDps += addDps
                     }
                 }
-
             }
         }
     }
