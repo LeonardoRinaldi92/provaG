@@ -12,5 +12,20 @@ export const store = reactive (
         ActualStage : 1,
         AcutalFloor : 1,
         timer: 30,
+        allies : [
+            {
+                name: 'pippo',
+                priceToBuy: 500,
+                priceToLvlUp: 700,
+                increasePrice: 1.4,
+                startDps: 10,
+                increaseDps: 1.5,
+                atkSpd: 1,
+                Dps: 10,
+                actualLevel: 1,
+                unlocked: false,
+
+            }
+        ]
     }
 )

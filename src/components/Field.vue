@@ -63,6 +63,18 @@
                     store.clickPrice = Math.round((store.clickPrice * 1.2 ) + (((store.clickPrice * 1.2) / 100) * 10))
                     
                 }
+            },
+            calculateIncreaseDps(ally){
+                return ally.Dps * ally.increaseDps
+            },
+            calculatePriceToLevelUp(ally){
+                let price = null
+                if(ally.actualLevel == 1){
+                    price = ally.priceToLvlUp
+                }else {
+                    price = ally.priceToLvlUp * ally.increasePrice
+                }
+                return price
             }
         }
     }
@@ -90,14 +102,30 @@
                     </div>
                 </div>
                 <div class="col-12 h-25" style="background-color: rgb(61, 129, 40);">
-                    <div class="row justify-content-center" id="azioni" @mouseenter="this.disableAddCoin = true" @mouseleave="this.disableAddCoin = false">
-                        <div class="col-6" style="cursor: pointer;" @click="increaseClickValue()" >
+                    <div class="row justify-content-center w-100" id="azioni" @mouseenter="this.disableAddCoin = true" @mouseleave="this.disableAddCoin = false">
+                        <div class="col-8" style="cursor: pointer;" @click="increaseClickValue()" >
                              <h3 :class="(store.coin >= store.clickPrice)? 'text-black' : 'text-danger' ">
                                 aumenta valore del click
                              </h3>
                              <h5>
                                 valore attuale {{ store.clickValue }} Prezzo {{ store.clickPrice }}
                              </h5>
+                        </div>
+                        <div v-for="ally in store.allies" :key="index" class="col-8" style="cursor: pointer;">
+                            <h3>
+                               {{ ally.name }} 
+                            </h3>
+                            <h5>
+                                (DPS {{ ally.Dps }}) 
+                            </h5>
+                            <h6 v-if=(ally.unlocked)>
+                                aumenta Dps {{ calculateIncreaseDps(ally)}} price {{ calculatePriceToLevelUp(ally) }}
+                            </h6>
+                            <h6 v-else>
+                                sblocca : {{ ally.priceToBuy }}
+
+                            </h6>
+
 
                         </div>
 
