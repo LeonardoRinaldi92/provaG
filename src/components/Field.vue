@@ -31,7 +31,6 @@
                     store.enemyLife  = store.enemyLife - store.clickValue
                     this.addCoin()
                 }
-                console.log('ciao')
             },
             addCoin() {
                 if(store.enemyLife <= 0 ) {
