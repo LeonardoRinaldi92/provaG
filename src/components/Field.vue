@@ -1,10 +1,12 @@
 <script>
     import { store } from '../store';
     import Enemy from './Enemy.vue';
+    import Timer from './Timer.vue';
     export default {
         name: 'Field',
         components: {
-            Enemy
+            Enemy,
+            Timer
         },
         data() {
             return {
@@ -32,15 +34,18 @@
                     this.hitEnemy()
                     if(store.enemyLife <= 0 ) {
                         this.increaseEnemyLife()
-                        store.coin = Math.round(store.coin + store.coinValue) 
-                        store.coinValue*=1.2
+
                         if (store.ActualStage <= 9) {
                             store.ActualStage ++
+                            store.coin = Math.round(store.coin + store.coinValue) 
                         }
                         else {
                             store.ActualStage = 1
                             store.AcutalFloor ++
+                            store.timer = 30
+                            store.coin = Math.round((store.coin + store.coinValue) * 5) 
                         }
+                        store.coinValue*=1.2
                     }
                 }
             },
@@ -73,6 +78,9 @@
                         <h2>
                             {{ store.AcutalFloor }} - {{ store.ActualStage }}
                         </h2>
+                        <div v-if="(store.ActualStage % 10 == 0)">
+                            <Timer/>
+                        </div>
                         <h3>
                             coin : {{ store.coin }}
                         </h3>
