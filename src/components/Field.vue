@@ -93,6 +93,7 @@
                         }else {
                             
                             ally.Dps = Math.round(ally.Dps * ally.increaseDps)
+                            console.log('ciao')
                         }
                     }
                 }
