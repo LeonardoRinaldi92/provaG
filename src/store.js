@@ -20,7 +20,7 @@ export const store = reactive (
                 increasePrice: 1.4,
                 startDps: 10,
                 increaseDps: 1.5,
-                atkSpd: 1,
+                atkSpd: 1000,
                 Dps: 10,
                 actualLevel: 1,
                 unlocked: false,

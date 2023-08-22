@@ -72,9 +72,25 @@
                 if(ally.actualLevel == 1){
                     price = ally.priceToLvlUp
                 }else {
-                    price = ally.priceToLvlUp * ally.increasePrice
+                    price = Math.round(ally.priceToLvlUp * ally.increasePrice)
                 }
                 return price
+            },
+            levelUpAlly(ally){
+                if(!ally.unlocked){
+                    if (store.coin >= ally.priceToBuy){
+                        store.coin= store.coin - ally.priceToBuy
+                        ally.unlocked = true
+                    }
+                }else {
+                    if(store.coin >= ally.priceToLvlUp){
+                        store.coin= store.coin - ally.priceToLvlUp
+                        ally.actualLevel ++
+                        ally.startDps = Math.round(ally.startDps * ally.increaseDps)
+                        ally.priceToLvlUp = Math.round( ally.priceToLvlUp * ally.increasePrice)
+                    }
+                }
+
             }
         }
     }
@@ -111,7 +127,7 @@
                                 valore attuale {{ store.clickValue }} Prezzo {{ store.clickPrice }}
                              </h5>
                         </div>
-                        <div v-for="ally in store.allies" :key="index" class="col-8" style="cursor: pointer;">
+                        <div v-for="ally in store.allies" :key="index" class="col-8" style="cursor: pointer;" @click="levelUpAlly(ally)" >
                             <h3>
                                {{ ally.name }} 
                             </h3>
