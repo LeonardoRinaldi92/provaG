@@ -13,6 +13,7 @@ export const store = reactive (
         AcutalFloor : 1,
         timer: 30,
         totalDps : 0,
+        autoAttack: false,
         allies : [
             {
                 name: 'pippo',

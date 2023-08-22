@@ -11,15 +11,15 @@
         data() {
             return {
                 store,
-                disableAddCoin : false,
+                disableClickAtk : false,
             }
         },
         methods: {
             increaseEnemyLife(){
                 if(store.ActualStage == 9 ) {
-                    store.enemyMaxLife = store.enemyMaxLife * 6
+                    store.enemyMaxLife = store.enemyMaxLife * 5
                 }else if(store.ActualStage == 10){
-                    store.enemyMaxLife = store.enemyMaxLife/ 3
+                    store.enemyMaxLife = store.enemyMaxLife/ 5
                 }else {
                     store.enemyMaxLife*= 1.4
                 }
@@ -27,26 +27,26 @@
                 store.enemyLife = store.enemyMaxLife
             },
             hitEnemy(){
-                store.enemyLife  = store.enemyLife - store.clickValue
+                if(this.disableClickAtk == false){
+                    store.enemyLife  = store.enemyLife - store.clickValue
+                    this.addCoin()
+                }
+                console.log('ciao')
             },
             addCoin() {
-                if(this.disableAddCoin == false){
-                    this.hitEnemy()
-                    if(store.enemyLife <= 0 ) {
-                        this.increaseEnemyLife()
-
-                        if (store.ActualStage <= 9) {
-                            store.ActualStage ++
-                            store.coin = Math.round(store.coin + store.coinValue) 
-                        }
-                        else {
-                            store.ActualStage = 1
-                            store.AcutalFloor ++
-                            store.timer = 30
-                            store.coin = Math.round((store.coin + store.coinValue) * 5) 
-                        }
-                        store.coinValue*=1.2
+                if(store.enemyLife <= 0 ) {
+                    this.increaseEnemyLife()
+                    if (store.ActualStage <= 9) {
+                        store.ActualStage ++
+                        store.coin = Math.round(store.coin + store.coinValue) 
                     }
+                    else {
+                        store.ActualStage = 1
+                        store.AcutalFloor ++
+                        store.timer = 30
+                        store.coin = Math.round((store.coin + store.coinValue) * 5) 
+                    }
+                    store.coinValue*=1.2
                 }
             },
             increaseClickValue() {
@@ -86,6 +86,9 @@
                         ally.unlocked = true
                         store.totalDps += ally.Dps
                     }
+                    if(store.autoAttack == false){
+                        store.autoAttack = true
+                    }
                 }else {
                     if(store.coin >= ally.priceToLvlUp){
                         store.coin= store.coin - ally.priceToLvlUp
@@ -101,6 +104,26 @@
                         store.totalDps += addDps
                     }
                 }
+            },
+            hitEnemyWhitDps(){
+                if(store.totalDps !== 0){
+                    store.allies.forEach( ally => {
+                        if(ally.unlocked){
+                            let attackingAlly  = setInterval(() => {
+                                store.enemyLife -= ally.Dps
+                                this.addCoin()
+                            },ally.atkSpd)
+                        }
+                    })
+                }
+            }
+        },
+        watch: {
+            'store.autoAttack': {
+                immediate: true, // This will trigger the watcher immediately when the component is mounted
+                handler(newValue) {
+                    this.hitEnemyWhitDps(); // Call your function when totalDps changes
+                }
             }
         }
     }
@@ -110,7 +133,7 @@
 <template>
     <div class="w-100 h-100">
         <div class="container-fluid h-100">
-            <div class="row h-100"  @click="addCoin()">
+            <div class="row h-100"  @click="hitEnemy()">
                 <div class="col-12 h-75" style="background-color: rgb(175, 201, 224);">
                     <div class="text-center">
                         <h2>
@@ -128,7 +151,7 @@
                     </div>
                 </div>
                 <div class="col-12 h-25" style="background-color: rgb(61, 129, 40);">
-                    <div class="row justify-content-center w-100" id="azioni" @mouseenter="this.disableAddCoin = true" @mouseleave="this.disableAddCoin = false">
+                    <div class="row justify-content-center w-100" id="azioni" @mouseenter="this.disableClickAtk = true" @mouseleave="this.disableClickAtk = false">
                         <div class="col-8" style="cursor: pointer;" @click="increaseClickValue()" >
                              <h3 :class="(store.coin >= store.clickPrice)? 'text-black' : 'text-danger' ">
                                 aumenta valore del click
@@ -137,7 +160,7 @@
                                 valore attuale {{ store.clickValue }} Prezzo {{ store.clickPrice }}
                              </h5>
                         </div>
-                        <div v-for="ally in store.allies" :key="index" class="col-8" style="cursor: pointer;" @click="levelUpAlly(ally)" >
+                        <div v-for="(ally, index) in store.allies" :key="index" class="col-8" style="cursor: pointer;" @click="levelUpAlly(ally)" >
                             <h3>
                                {{ ally.name }} 
                             </h3>
@@ -149,18 +172,11 @@
                             </h6>
                             <h6 v-else>
                                 sblocca : {{ ally.priceToBuy }}
-
                             </h6>
-
-
                         </div>
-
                     </div>
                 </div>
-
-
             </div>
-
         </div>
     </div>
 </template>
