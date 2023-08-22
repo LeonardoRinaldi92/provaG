@@ -1,10 +1,12 @@
 <script>
     import { store } from '../store';
     import Enemy from './Enemy.vue';
+    import Timer from './Timer.vue';
     export default {
         name: 'Field',
         components: {
-            Enemy
+            Enemy,
+            Timer
         },
         data() {
             return {
@@ -73,6 +75,9 @@
                         <h2>
                             {{ store.AcutalFloor }} - {{ store.ActualStage }}
                         </h2>
+                        <div v-if="(store.ActualStage % 10 == 0)">
+                            <Timer/>
+                        </div>
                         <h3>
                             coin : {{ store.coin }}
                         </h3>

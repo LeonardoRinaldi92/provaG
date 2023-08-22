@@ -11,5 +11,6 @@ export const store = reactive (
         enemyMaxLife : 10,
         ActualStage : 1,
         AcutalFloor : 1,
+        timer: 30,
     }
 )
