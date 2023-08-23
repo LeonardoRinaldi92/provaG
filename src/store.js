@@ -6,6 +6,7 @@ export const store = reactive (
         coinValue : 12,
         clickValue: 1,
         clickLevel: 1,
+        increaseClickValue: 1,
         clickPrice : 25,
         enemyLife : 10,
         enemyMaxLife : 10,
@@ -20,7 +21,7 @@ export const store = reactive (
             {
                 name: 'pippo',
                 priceToBuy: 500,
-                priceToLvlUp: 700,
+                priceToLvlUp: 300,
                 increasePrice: 1.4,
                 startDps: 15,
                 increaseDps: 1.5,

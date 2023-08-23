@@ -43,6 +43,19 @@
                 if(store.enemyLife <= 0 ) {
                     this.increaseEnemyLife()
 
+
+                    if(store.ActualEnemies == 10 && store.ActualStage == 10){
+                        console.log('soldi boss', (store.coin + store.coinValue)-store.coin,store.ActualEnemies)
+                        store.coin = Math.round((store.coin + store.coinValue) * 5) 
+                        store.coinValue*=1.5
+                    }
+                    else if(store.ActualEnemies == 10){                       
+                        store.coin = Math.round((store.coin + store.coinValue) * 2) 
+                        console.log('soldi miniboss',(store.coin + store.coinValue)-store.coin, store.ActualEnemies)
+                        store.coinValue*=1.2
+                    }else{
+                        store.coinValue*=1.05
+                    }
                     if (store.ActualStage <= 9) {
                         if(store.ActualEnemies < 10){
                             store.ActualEnemies ++
@@ -50,23 +63,16 @@
                             store.ActualEnemies = 1
                             store.ActualStage ++
                         }
-                        store.coin = Math.round(store.coin + store.coinValue) 
+
+                        if((!store.ActualEnemies == 10 && store.ActualStage == 10) || !(store.ActualEnemies == 10)){
+                            console.log('soldi normali',(store.coin + store.coinValue)-store.coin, store.ActualEnemies)
+                            store.coin = Math.round(store.coin + store.coinValue) 
+                        }
                     }
                     else {
                         store.ActualStage = 1
                         store.AcutalFloor ++
                         store.timer = 30
-
-                    }
-                    if(store.ActualEnemies == 10 && store.ActualStage == 10){
-                        store.coin = Math.round((store.coin + store.coinValue) * 5) 
-                        store.coinValue*=1.5
-                    }
-                    else if(store.ActualEnemies == 10){                       
-                        store.coin = Math.round((store.coin + store.coinValue) * 2) 
-                        store.coinValue*=1.2
-                    }else{
-                        store.coinValue*=1.05
                     } 
                 }
             },
@@ -74,7 +80,7 @@
                 if (store.coin >= store.clickPrice) {
                     store.coin = store.coin - store.clickPrice
                     store.clickLevel ++
-                    store.clickValue ++
+                    store.clickValue+= store.increaseClickValue
                     if(store.clickLevel % 25 == 0 ) {
                         store.clickValue *= 2
                     }
@@ -160,7 +166,7 @@
                         <div class="col-4 text-end">
                            
                             <h3>
-                                coin : {{ store.coin }}
+                                <i class="fa-solid fa-coins"></i> {{ store.coin }}
                             </h3>
                         </div>
                         <div v-if="(store.ActualStage % 10 == 0)" >
@@ -179,15 +185,46 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-4 h-100" style="background-color: rgb(61, 129, 40);">
+                <div class="col-4 h-100" style="background-color: rgb(190, 202, 120);">
                     <div class="row justify-content-center w-100" id="azioni" @mouseenter="this.disableClickAtk = true" @mouseleave="this.disableClickAtk = false">
-                        <div class="col-8" style="cursor: pointer;" @click="increaseClickValue()" >
-                             <h3 :class="(store.coin >= store.clickPrice)? 'text-black' : 'text-danger' ">
-                                aumenta valore del click
-                             </h3>
-                             <h5>
-                                valore attuale {{ store.clickValue }} Prezzo {{ store.clickPrice }}
-                             </h5>
+                        <div class="col-12 row  p-2">
+                            <div class="col-3">
+                                <i class="fa-solid fa-arrow-pointer"></i> {{ store.clickValue }}
+                            </div>
+                            <div class="col-3">
+                                <i class="fa-solid fa-users"></i> {{ store.totalDps }}
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="col-12 row align-items-center p-2" style="cursor: pointer;" @click="increaseClickValue()">
+                            <div class="col-4">
+                                <div :class="(store.coin >= store.clickPrice)? 'btn-success' : ' btn-danger'" class="btn text-white" >
+                                    {{ store.clickPrice }} <i class="fa-solid fa-coins"></i>
+                                </div>
+                            </div>
+                            <div class="col-8 mb-4">
+                                <h6>
+                                    Aumenta potenza click
+                                </h6>
+                                <span class="text-secondary">
+                                   <span>
+                                       prossimo livello   
+                                   </span>
+                                   <span>
+                                    <i class="fa-solid fa-arrow-pointer"></i>
+                                   </span>
+                                   <span v-if="((store.clickLevel+1 )% 25 == 0)">
+                                    {{ (store.clickValue + store.increaseClickValue) * 2}}
+                                   </span>
+                                   <span v-else-if="((store.clickLevel+1 )% 10 == 0)">
+                                    {{ (store.clickValue + store.increaseClickValue) * 1.5}}
+                                   </span>
+                                   <span v-else>
+                                    {{ (store.clickValue + store.increaseClickValue)}}
+                                   </span>
+                                </span>
+                            </div>
+                            <hr>
                         </div>
                         <div v-for="(ally, index) in store.allies" :key="index" class="col-8" style="cursor: pointer;" @click="levelUpAlly(ally)" >
                             <h3>
@@ -209,3 +246,11 @@
         </div>
     </div>
 </template>
+<style lang="scss" scoped>
+
+.button-ally {
+    border: 1px solid black;
+}
+
+
+</style>
