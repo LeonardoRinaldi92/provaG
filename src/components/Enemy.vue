@@ -16,6 +16,7 @@ export default {
         createEnemy() {
             let randNumb = Math.floor(Math.random() * this.store.enemies.length);
             let img = this.store.enemies[randNumb].img;
+            store.ActualEnemies;
 
             return {
                 backgroundImage: "url('" + img + "')",
