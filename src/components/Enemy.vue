@@ -50,7 +50,9 @@ export default {
 }
 
 .NoBoss {
-    background-color: grey;
+    background-image:url('Flower_Bloop.webp');
+    background-repeat: no-repeat;
+    background-size: contain;
 }
 
 </style>
