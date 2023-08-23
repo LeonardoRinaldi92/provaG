@@ -19,7 +19,7 @@ export default {
             return {
                 backgroundImage: "url('" + img + "')",
                 backgroundRepeat: 'no-repeat',
-                backgroundSize: 'contain'
+                backgroundSize: 'contain',
             };
         },
         createEnemyName() {
