@@ -18,12 +18,17 @@
         },
         methods: {
             increaseEnemyLife(){
-                if(store.ActualStage == 9 ) {
-                    store.enemyMaxLife = store.enemyMaxLife * 5
-                }else if(store.ActualStage == 10){
-                    store.enemyMaxLife = store.enemyMaxLife/ 5
+                if (store.ActualEnemies == 9 && store.ActualStage == 9){
+                    store.enemyMaxLife *= 8
+                }else if(store.ActualEnemies == 9 ) {
+                    store.enemyMaxLife = store.enemyMaxLife * 4
+                }else if (store.ActualEnemies == 10 && store.ActualStage == 10 ){
+                    store.enemyLife /= 7
+                }
+                else if(store.ActualEnemies == 10){
+                    store.enemyMaxLife = store.enemyMaxLife/ 3
                 }else {
-                    store.enemyMaxLife*= 1.4
+                    store.enemyMaxLife*= 1.1
                 }
                 store.enemyMaxLife = Math.round(store.enemyMaxLife)
                 store.enemyLife = store.enemyMaxLife
@@ -37,17 +42,32 @@
             addCoin() {
                 if(store.enemyLife <= 0 ) {
                     this.increaseEnemyLife()
+
                     if (store.ActualStage <= 9) {
-                        store.ActualStage ++
+                        if(store.ActualEnemies < 10){
+                            store.ActualEnemies ++
+                        } else {
+                            store.ActualEnemies = 1
+                            store.ActualStage ++
+                        }
                         store.coin = Math.round(store.coin + store.coinValue) 
                     }
                     else {
                         store.ActualStage = 1
                         store.AcutalFloor ++
                         store.timer = 30
-                        store.coin = Math.round((store.coin + store.coinValue) * 5) 
+
                     }
-                    store.coinValue*=1.2
+                    if(store.ActualEnemies == 10 && store.ActualStage == 10){
+                        store.coin = Math.round((store.coin + store.coinValue) * 5) 
+                        store.coinValue*=1.5
+                    }
+                    else if(store.ActualEnemies == 10){                       
+                        store.coin = Math.round((store.coin + store.coinValue) * 2) 
+                        store.coinValue*=1.2
+                    }else{
+                        store.coinValue*=1.05
+                    } 
                 }
             },
             increaseClickValue() {
