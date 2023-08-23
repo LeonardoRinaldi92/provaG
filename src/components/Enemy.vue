@@ -7,18 +7,38 @@ export default {
             store
         }
     },
+    methods: {
+        createNewEnemy(){
+            this.createEnemy
+        }
+    },
     computed: {
+        createEnemy() {
+            let randNumb = Math.floor(Math.random() * this.store.enemies.length);
+            let img = this.store.enemies[randNumb].img;
+
+            return {
+                backgroundImage: "url('" + img + "')",
+                backgroundRepeat: 'no-repeat',
+                backgroundSize: 'contain'
+            };
+        },
         healthBarStyle() {
-        const percentage = (store.enemyLife / store.enemyMaxLife) * 100;
+            const percentage = (this.store.enemyLife / this.store.enemyMaxLife) * 100;
             return {
                 width: `${percentage}%`
             };
         },
-        isBoss(){
-            if (store.ActualStage === 10) {
-                return 'Boss'
-            }else {
-                return  'NoBoss'
+        isBoss() {
+            return this.store.ActualStage === 10 ? 'Boss' : 'NoBoss';
+        }
+    },
+    watch: {
+        'store.ActualEnemies': {
+            immediate: true,
+            handler(newValue) {
+                console.log('ciao');
+                this.createNewEnemy(); // Corrected line
             }
         }
     }
@@ -36,7 +56,7 @@ export default {
                 
             </div>
         </div>
-        <div style="height:300px;width: 200px;" :class="isBoss">
+        <div style="height:300px;width: 200px;" :style="createEnemy" :class="isBoss" id="enemy">
 
         </div>
     </div>
@@ -49,10 +69,6 @@ export default {
     background-color: black;
 }
 
-.NoBoss {
-    background-image:url('Flower_Bloop.webp');
-    background-repeat: no-repeat;
-    background-size: contain;
-}
+
 
 </style>

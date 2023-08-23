@@ -30,6 +30,28 @@ export const store = reactive (
                 unlocked: false,
 
             }
+        ],
+        enemies : [
+            {
+                name: 'Catra',
+                img: 'Catra-defeat.webp'
+            },
+            {
+                name: 'Dirge',
+                img: 'Dirge_Beetle.webp'
+            },
+            {
+                name: 'Flower',
+                img: 'Flower_Bloop.webp'
+            },
+            {
+                name: 'Gerbeel',
+                img: 'Gerbeel.webp'
+            },
+            {
+                name: 'Spirit Flower',
+                img: 'Spit_Flower.webp'
+            },
         ]
     }
 )
