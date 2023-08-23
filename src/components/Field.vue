@@ -2,11 +2,13 @@
     import { store } from '../store';
     import Enemy from './Enemy.vue';
     import Timer from './Timer.vue';
+    import EnemiesMap from './EnemiesMap.vue';
     export default {
         name: 'Field',
         components: {
             Enemy,
-            Timer
+            Timer,
+            EnemiesMap
         },
         data() {
             return {
@@ -144,6 +146,9 @@
                         <h3>
                             coin : {{ store.coin }}
                         </h3>
+                        <div>
+                            <EnemiesMap/>
+                        </div>
                     </div>
                     <div>
                         <Enemy/>
