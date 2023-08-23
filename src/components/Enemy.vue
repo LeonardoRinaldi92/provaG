@@ -4,17 +4,15 @@ export default {
     name: 'Enemy',
     data() {
         return {
-            store
-        }
-    },
-    methods: {
-        createNewEnemy(){
-            this.createEnemy
+            store,
+            enemeyName : null
+            
         }
     },
     computed: {
         createEnemy() {
             let randNumb = Math.floor(Math.random() * this.store.enemies.length);
+            this.enemeyName = this.store.enemies[randNumb].name;
             let img = this.store.enemies[randNumb].img;
             store.ActualEnemies;
 
@@ -23,6 +21,9 @@ export default {
                 backgroundRepeat: 'no-repeat',
                 backgroundSize: 'contain'
             };
+        },
+        createEnemyName() {
+
         },
         healthBarStyle() {
             const percentage = (this.store.enemyLife / this.store.enemyMaxLife) * 100;
@@ -34,15 +35,6 @@ export default {
             return this.store.ActualStage === 10 ? 'Boss' : 'NoBoss';
         }
     },
-    watch: {
-        'store.ActualEnemies': {
-            immediate: true,
-            handler(newValue) {
-                console.log('ciao');
-                this.createNewEnemy(); // Corrected line
-            }
-        }
-    }
 }
 </script>
 
@@ -57,8 +49,12 @@ export default {
                 
             </div>
         </div>
-        <div style="height:300px;width: 200px;" :style="createEnemy" :class="isBoss" id="enemy">
-
+        <div style="height:300px;width: 200px;">
+            <div style="height:280px;width: 200px;" :style="createEnemy" :class="isBoss" id="enemy">
+            </div>
+            <div class="text-center">
+                {{ this.enemeyName }}
+            </div>
         </div>
     </div>
 </template>
