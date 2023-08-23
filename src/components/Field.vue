@@ -155,26 +155,31 @@
     <div class="w-100 h-100">
         <div class="container-fluid h-100">
             <div class="row h-100"  @click="hitEnemy()">
-                <div class="col-12 h-75" style="background-color: rgb(175, 201, 224);">
-                    <div class="text-center">
-                        <h2>
-                            {{ store.AcutalFloor }} - {{ store.ActualStage }}
-                        </h2>
-                        <div v-if="(store.ActualStage % 10 == 0)">
+                <div class="col-8 h-100" style="background-color: rgb(175, 201, 224);">
+                    <div class="row justify-content-end">
+                        <div class="col-4 text-end">
+                           
+                            <h3>
+                                coin : {{ store.coin }}
+                            </h3>
+                        </div>
+                        <div v-if="(store.ActualStage % 10 == 0)" >
                             <Timer/>
                         </div>
-                        <h3>
-                            coin : {{ store.coin }}
-                        </h3>
-                        <div>
+                        <div class="col-12">
+                            <div class="text-center mb-2">
+                                livello:{{ store.AcutalFloor }} - stage:{{ store.ActualStage }}
+                            </div>
                             <EnemiesMap/>
                         </div>
-                    </div>
-                    <div>
-                        <Enemy/>
+                        <div class="col-12 row justify-content-center mt-5">
+                            <div class="col-6 text-center">
+                                <Enemy/>
+                            </div>
+                        </div>
                     </div>
                 </div>
-                <div class="col-12 h-25" style="background-color: rgb(61, 129, 40);">
+                <div class="col-4 h-100" style="background-color: rgb(61, 129, 40);">
                     <div class="row justify-content-center w-100" id="azioni" @mouseenter="this.disableClickAtk = true" @mouseleave="this.disableClickAtk = false">
                         <div class="col-8" style="cursor: pointer;" @click="increaseClickValue()" >
                              <h3 :class="(store.coin >= store.clickPrice)? 'text-black' : 'text-danger' ">

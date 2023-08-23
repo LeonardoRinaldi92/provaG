@@ -40,7 +40,15 @@ export default {
 
 <template>
     <div>
-        <div style="width: 200px; margin-bottom: 10px; height: 20px; border: 1px solid; position: relative;"  >
+        <div style="height:300px;width: 200px;" class="mx-auto mt-5">
+            <div style="height:280px;width: 200px;" :style="createEnemy" :class="isBoss" id="enemy">
+            </div>
+            <div class="text-center">
+                {{ this.enemeyName }}
+            </div>
+        </div>
+    </div>
+    <div style="width: 200px; margin-bottom: 10px; height: 20px; border: 1px solid; position: relative;"   class="mx-auto">
             <div style="position: absolute; left: 50%; z-index: 3; top: 1px; font-size: 16px; line-height: 16px; height: 16px;"> 
                 {{ store.enemyLife }}
 
@@ -49,14 +57,6 @@ export default {
                 
             </div>
         </div>
-        <div style="height:300px;width: 200px;">
-            <div style="height:280px;width: 200px;" :style="createEnemy" :class="isBoss" id="enemy">
-            </div>
-            <div class="text-center">
-                {{ this.enemeyName }}
-            </div>
-        </div>
-    </div>
 </template>
 
 <style lang="scss" scoped>
