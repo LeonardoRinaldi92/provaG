@@ -42,8 +42,6 @@
             addCoin() {
                 if(store.enemyLife <= 0 ) {
                     this.increaseEnemyLife()
-
-
                     if(store.ActualEnemies == 10 && store.ActualStage == 10){
                         console.log('soldi boss', (store.coin + store.coinValue)-store.coin,store.ActualEnemies)
                         store.coin = Math.round((store.coin + store.coinValue) * 5) 
@@ -56,6 +54,7 @@
                     }else{
                         store.coinValue*=1.05
                     }
+                    
                     if (store.ActualStage <= 9) {
                         if(store.ActualEnemies < 10){
                             store.ActualEnemies ++
@@ -169,7 +168,7 @@
                                 <i class="fa-solid fa-coins"></i> {{ store.coin }}
                             </h3>
                         </div>
-                        <div v-if="(store.ActualStage % 10 == 0)" >
+                        <div v-if="(store.ActualEnemies % 10 == 0)" >
                             <Timer/>
                         </div>
                         <div class="col-12">
