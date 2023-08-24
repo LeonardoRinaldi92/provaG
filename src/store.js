@@ -19,12 +19,18 @@ export const store = reactive (
                 priceToLvlUp: 700,
                 increasePrice: 1.4,
                 startDps: 10,
-                increaseDps: 1.5,
+                increaseDps: 3,
                 atkSpd: 1000,
                 Dps: 10,
                 actualLevel: 1,
                 unlocked: false,
 
+            }
+        ],
+        enemies: [
+            {
+                name: 'lello',
+                img: 'ciao',
             }
         ]
     }
