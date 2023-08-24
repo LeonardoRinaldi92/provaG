@@ -150,69 +150,9 @@
                 if(ally.actualLevel == 1){
                     price = ally.priceToLvlUp
                 }else {
-                    price = Math.round(ally.priceToLvlUp * ally.increasePrice)
-                    price = price.toExponential(3)
+                    price = ally.priceToLvlUp * ally.increasePrice
                 }
                 return price
-            },
-            levelUpAlly(ally){
-                let oldDps = ally.Dps
-                let addDps = null
-                if(!ally.unlocked){
-                    if (store.coin >= ally.priceToBuy){
-                        store.coin= store.coin - ally.priceToBuy
-                        ally.unlocked = true
-                        store.totalDps += ally.Dps
-                    }
-                    if(store.autoAttack == false){
-                        store.autoAttack = true
-                    }
-                }else {
-                    if(store.coin >= ally.priceToLvlUp){
-                        store.coin= store.coin - ally.priceToLvlUp
-                        ally.actualLevel ++
-                        ally.priceToLvlUp = Math.round( ally.priceToLvlUp * ally.increasePrice)
-                        if(ally.actualLevel == 1){
-                            ally.Dps = Math.round(ally.startDps * ally.increaseDps)
-                               
-                        }else if(ally.actualLevel == 10){          
-                            ally.increaseDps = 1.5                
-                            ally.Dps = Math.round(ally.Dps * 2)
-                        }else if (ally.actualLevel == 25){
-                            ally.increaseDps = 1
-                            ally.Dps = Math.round(ally.Dps * 2)
-                        }else if (ally.actualLevel % 25 == 0){
-                            ally.startDps += 5
-                            ally.Dps = Math.round(ally.Dps * 2)
-                        }else if(ally.actualLevel < 25){
-                            ally.Dps = Math.round((ally.startDps / ally.increaseDps) + ally.Dps)
-                        }else {
-                            ally.Dps = Math.round((ally.startDps * ally.increaseDps) + ally.Dps)
-                        }
-                        addDps = ally.Dps - oldDps
-                        store.totalDps += addDps
-                    }
-                }
-            },
-            hitEnemyWhitDps(){
-                if(store.totalDps !== 0){
-                    store.allies.forEach( ally => {
-                        if(ally.unlocked){
-                            let attackingAlly  = setInterval(() => {
-                                store.enemyLife -= ally.Dps
-                                this.addCoin()
-                            },ally.atkSpd)
-                        }
-                    })
-                }
-            }
-        },
-        watch: {
-            'store.autoAttack': {
-                immediate: true, // This will trigger the watcher immediately when the component is mounted
-                handler(newValue) {
-                    this.hitEnemyWhitDps(); // Call your function when totalDps changes
-                }
             }
         }
     }
@@ -288,7 +228,7 @@
                             </div>
                             <hr>
                         </div>
-                        <div v-for="(ally, index) in store.allies" :key="index" class="col-8" style="cursor: pointer;" @click="levelUpAlly(ally)" >
+                        <div v-for="ally in store.allies" :key="index" class="col-8" style="cursor: pointer;">
                             <h3>
                                {{ ally.name }} 
                             </h3>
