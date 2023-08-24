@@ -43,13 +43,11 @@
                 if(store.enemyLife <= 0 ) {
                     this.increaseEnemyLife()
                     if(store.ActualEnemies == 10 && store.ActualStage == 10){
-                        console.log('soldi boss', (store.coin + store.coinValue)-store.coin,store.ActualEnemies)
                         store.coin = Math.round((store.coin + store.coinValue) * 5) 
                         store.coinValue*=1.5
                     }
                     else if(store.ActualEnemies == 10){                       
                         store.coin = Math.round((store.coin + store.coinValue) * 2) 
-                        console.log('soldi miniboss',(store.coin + store.coinValue)-store.coin, store.ActualEnemies)
                         store.coinValue*=1.2
                     }else{
                         store.coinValue*=1.05
@@ -62,9 +60,7 @@
                             store.ActualEnemies = 1
                             store.ActualStage ++
                         }
-
                         if((!store.ActualEnemies == 10 && store.ActualStage == 10) || !(store.ActualEnemies == 10)){
-                            console.log('soldi normali',(store.coin + store.coinValue)-store.coin, store.ActualEnemies)
                             store.coin = Math.round(store.coin + store.coinValue) 
                         }
                     }
@@ -100,6 +96,7 @@
                     price = ally.priceToLvlUp
                 }else {
                     price = Math.round(ally.priceToLvlUp * ally.increasePrice)
+                    price = price.toExponential(3)
                 }
                 return price
             },
@@ -123,8 +120,19 @@
                         if(ally.actualLevel == 1){
                             ally.Dps = Math.round(ally.startDps * ally.increaseDps)
                                
-                        }else {                          
-                            ally.Dps = Math.round(ally.Dps * ally.increaseDps)
+                        }else if(ally.actualLevel == 10){          
+                            ally.increaseDps = 1.5                
+                            ally.Dps = Math.round(ally.Dps * 2)
+                        }else if (ally.actualLevel == 25){
+                            ally.increaseDps = 1
+                            ally.Dps = Math.round(ally.Dps * 2)
+                        }else if (ally.actualLevel % 25 == 0){
+                            ally.startDps += 5
+                            ally.Dps = Math.round(ally.Dps * 2)
+                        }else if(ally.actualLevel < 25){
+                            ally.Dps = Math.round((ally.startDps / ally.increaseDps) + ally.Dps)
+                        }else {
+                            ally.Dps = Math.round((ally.startDps * ally.increaseDps) + ally.Dps)
                         }
                         addDps = ally.Dps - oldDps
                         store.totalDps += addDps

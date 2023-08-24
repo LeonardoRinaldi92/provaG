@@ -16,14 +16,12 @@ export default {
     methods: {
         TimerFunction() {
             if(store.ActualEnemies == 10){
-                console.log('parte il cronomtro)')
                 this.time = setInterval(() => {
                     if(store.timer > 0) {
                         store.timer -= 0.01
                         this.restart = false
                     }else {
                         clearInterval(this.time)
-                        console.log('blocca cronometro')
                         store.timer = 30
                         store.enemyLife = store.enemyMaxLife
                         if(store.ActualEnemies == 10 && store.ActualStage == 10){
@@ -39,7 +37,6 @@ export default {
             }  
         },
         restartTimer(){
-            console.log('parte il restart')
             if (this.restart == true ){
                 this.TimerFunction
             }
