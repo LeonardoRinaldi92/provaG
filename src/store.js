@@ -19,7 +19,7 @@ export const store = reactive (
         autoAttack: false,
         allies : [
             {
-                name: 'pippo',
+                name: 'primo alleato',
                 priceToBuy: 500,
                 priceToLvlUp: 300,
                 increasePrice: 1.4,

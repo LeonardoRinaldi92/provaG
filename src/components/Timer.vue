@@ -15,21 +15,27 @@ export default {
     },
     methods: {
         TimerFunction() {
+            console.log(store.ActualEnemies)
             if(store.ActualEnemies == 10){
                 this.time = setInterval(() => {
                     if(store.timer > 0) {
                         store.timer -= 0.01
-                        this.restart = false
+                        console.log('scorro')
+                        if(store.ActualEnemies !== 10){
+                            clearInterval(this.time)
+                            console.log('mi blocco')
+                        }
                     }else {
                         clearInterval(this.time)
+                        console.log('mi blocco')
                         store.timer = 30
-                        store.enemyLife = store.enemyMaxLife
                         if(store.ActualEnemies == 10 && store.ActualStage == 10){
                             store.enemyMaxLife /= 7
                             store.enemyLife = store.enemyMaxLife
                         }else {
                             store.enemyMaxLife /= 4
                             store.enemyLife = store.enemyMaxLife
+                            console.log('riduco vita miniboss')
                         }
                         store.ActualEnemies --
                     }
@@ -45,7 +51,6 @@ export default {
     created() {
         store.timer = 30
         this.TimerFunction()
-        this.restartTimer()
     }
 }
 

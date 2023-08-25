@@ -19,22 +19,27 @@
         methods: {
             //aumento vita dei mostri
             increaseEnemyLife(){
+                console.log('vita prima', store.enemyMaxLife)
                 //aumento vita x 8 nel caso sia un Boss di fine stage
                 if (store.ActualEnemies == 9 && store.ActualStage == 9){
                     store.enemyMaxLife *= 8
+                    console.log('aumento vita boss: ',store.enemyMaxLife)
                 //aumento vita nel caso sia un miniBoss 
                 }else if(store.ActualEnemies == 9 ) {
                     store.enemyMaxLife = store.enemyMaxLife * 4
+                    console.log('aumento vita miniboss: ',store.enemyMaxLife)
                 //reset della vita dei nemici dopo boss
                 }else if (store.ActualEnemies == 10 && store.ActualStage == 10 ){
                     store.enemyLife /= 7
-                }
-                //reset della vita dei nemici dopo miniboss ma con aggiunta di un extra 30%
-                else if(store.ActualEnemies == 10){
+                    console.log('riduco vita boss: ',store.enemyMaxLife)
+                    //reset della vita dei nemici dopo miniboss ma con aggiunta di un extra 30%
+                }else if(store.ActualEnemies == 10){
                     store.enemyMaxLife = store.enemyMaxLife/ 3
-                //aumento classica di vita dopo ogni nemico
+                    console.log('riduco vita miniboss: ',store.enemyMaxLife)
+                //aumento classica di vita, dopo ogni nemico
                 }else {
                     store.enemyMaxLife*= 1.1
+                    console.log('aumento  vita: ', store.enemyMaxLife)
                 }
                 //rendi numero intero vita dei mostri
                 store.enemyMaxLife = Math.round(store.enemyMaxLife)
@@ -260,6 +265,9 @@
                         <hr>
                         <div class="col-12 row align-items-center p-2" style="cursor: pointer;" @click="increaseClickValue()">
                             <div class="col-4">
+                                <div>
+                                    livello : {{ store.clickLevel }}
+                                </div>
                                 <div :class="(store.coin >= store.clickPrice)? 'btn-success' : ' btn-danger'" class="btn text-white" >
                                     {{ store.clickPrice }} <i class="fa-solid fa-coins"></i>
                                 </div>
@@ -288,19 +296,46 @@
                             </div>
                             <hr>
                         </div>
-                        <div v-for="(ally, index) in store.allies" :key="index" class="col-8" style="cursor: pointer;" @click="levelUpAlly(ally)" >
-                            <h3>
-                               {{ ally.name }} 
-                            </h3>
-                            <h5>
+                        <div v-for="(ally, index) in store.allies" :key="index" class="col-12 row align-items-center p-2" style="cursor: pointer;" @click="levelUpAlly(ally)" >
+                            <div class="col-4">
+                                <div>
+                                    livello: {{ ally.actualLevel }}
+                                </div>
+                                <div v-if="(ally.unlocked)" :class="(store.coin >= ally.priceToLvlUp )? 'btn-success' : ' btn-danger'" class="btn text-white" >
+                                    {{ ally.priceToLvlUp }} <i class="fa-solid fa-coins"></i>
+                                </div>
+                                <div v-else :class="(store.coin >= ally.priceToBuy)? 'btn-success' : ' btn-danger'" class="btn text-white" >
+                                    {{ ally.priceToBuy }} <i class="fa-solid fa-coins"></i>
+                                </div>
+                                <h6 v-if='(ally.unlocked)'>
                                 (DPS {{ ally.Dps }}) 
-                            </h5>
-                            <h6 v-if=(ally.unlocked)>
+                                </h6>
+                            </div>
+                            <div class="col-8 mb-4">
+                                <h5>
+                                    <span v-if="!ally.unlocked">
+                                        sblocca :
+                                    </span>
+                                    {{ ally.name }}
+                                </h5>
+                                <h6 v-if="(ally.unlocked)">
+                                    Aumenta danno
+                                </h6>
+                                <span v-if="(ally.unlocked)" class="text-secondary">
+                                   <span>
+                                       prossimo livello   
+                                   </span>
+                                   <span>
+                                    <i class="fa-solid fa-users"></i>
+                                   </span>
+                                </span>
+                                
+                            </div>
+
+                            <!-- <h6 v-if=(ally.unlocked)>
                                 aumenta Dps {{ calculateIncreaseDps(ally)}} price {{ calculatePriceToLevelUp(ally) }}
-                            </h6>
-                            <h6 v-else>
-                                sblocca : {{ ally.priceToBuy }}
-                            </h6>
+                            </h6> -->
+                            <hr>
                         </div>
                     </div>
                 </div>
