@@ -242,10 +242,19 @@
                 handler(newValue) {
                     this.hitEnemyWhitDps(); // Call your function when totalDps changes
                 }
+            },
+            //prova per usare il watch dallo store
+            'store.coin': {
+                immediate: true,
+                handler(newValue) {
+                    console.log('ciao'); // Call your function when totalDps changes
+                }
+
             }
         },
         created() {
             this.load()
+            console.log(store)
         }
     }
 
