@@ -59,6 +59,7 @@
             },
             //funzione aggiunta soldi
             addCoin() {
+                let actualcoin = store.coin
                 //se la vita del mostro si azzera
                 if(store.enemyLife <= 0 ) {
                     //richiama la funzione di aumento della vita
@@ -67,7 +68,8 @@
                     if(store.ActualEnemies == 10 && store.ActualStage == 10){
                         //aggiunge ai soldi il valore fisso di vittoria e moltiplica il tutto x 5
                         store.coin = Math.round((store.coin + store.coinValue) * 5)
-                        //aumento il valore fisso di vittoria del 50% 
+                        //aumento il valore fisso di vittoria del 50%
+                        store.coinEarnd += store.coin - actualcoin
                         store.coinValue*=1.5
                     }
                     //se sconfiggi un miniboss
@@ -75,10 +77,14 @@
                         //aggiunge ai soldi il valore fisso di vittoria e moltiplica il tutto x 2            
                         store.coin = Math.round((store.coin + store.coinValue) * 2) 
                         //aumento il valore fisso di vittoria del 20% 
+                        store.coinEarnd += store.coin - actualcoin
                         store.coinValue*=1.2
                     //in tutti gli altri casi
                     }else{
                         //aumento il valore fisso di vittoria del 5% 
+                        console.log('entro qui')
+                        store.coin = Math.round(store.coin + store.coinValue)
+                        store.coinEarnd += store.coin - actualcoin
                         store.coinValue*=1.05
                     }
                     //richiama funzione x aumento livello/stage e modifica mappa
@@ -87,6 +93,7 @@
             },
             //funzione x aumento livello/stage e modifica mappa
             checkStage(){
+                let actualcoin = store.coin
                 //determiniamo se non siamo al boss
                 if (store.ActualStage <= 9) {
                     //determiniamo se non siamo al miniboss
@@ -104,7 +111,9 @@
                     //determiniamo se quello che abbiamo sconfitto è un mostro qualsiasi
                     if((!store.ActualEnemies == 10 && store.ActualStage == 10) || !(store.ActualEnemies == 10)){
                         //aggiubgi ai soldi il valore fisso di guadagno
-                        store.coin = Math.round(store.coin + store.coinValue) 
+                        store.coin = Math.round(store.coin + store.coinValue)
+                        console.log('guadagno qui')
+                        store.coinEarnd += store.coin - actualcoin
                     }
                 }
                 //determiniamo se siamo a un boss
@@ -297,7 +306,7 @@
                             <hr>
                         </div>
                         <div v-for="(ally, index) in store.allies" :key="index" class="col-12 row align-items-center p-2" style="cursor: pointer;" @click="levelUpAlly(ally)" >
-                            <div class="col-4">
+                            <div  v-if="(store.coinEarnd >= ally.priceToBuy)" class="col-4">
                                 <div>
                                     livello: {{ ally.actualLevel }}
                                 </div>
@@ -311,7 +320,7 @@
                                 (DPS {{ ally.Dps }}) 
                                 </h6>
                             </div>
-                            <div class="col-8 mb-4">
+                            <div v-if="(store.coinEarnd >= ally.priceToBuy)" class="col-8 mb-4">
                                 <h5>
                                     <span v-if="!ally.unlocked">
                                         sblocca :
@@ -329,13 +338,12 @@
                                     <i class="fa-solid fa-users"></i>
                                    </span>
                                 </span>
-                                
                             </div>
 
                             <!-- <h6 v-if=(ally.unlocked)>
                                 aumenta Dps {{ calculateIncreaseDps(ally)}} price {{ calculatePriceToLevelUp(ally) }}
                             </h6> -->
-                            <hr>
+                            <hr v-if="(store.coinEarnd >= ally.priceToBuy)" >
                         </div>
                     </div>
                 </div>

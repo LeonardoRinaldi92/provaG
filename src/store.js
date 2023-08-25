@@ -3,6 +3,7 @@ import { reactive } from "vue";
 export const store = reactive (
     {
         coin: 0,
+        coinEarnd : 0,
         coinValue : 12,
         clickValue: 1,
         clickLevel: 1,
