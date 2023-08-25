@@ -55,7 +55,6 @@
                     store.enemyLife  = store.enemyLife - store.clickValue
                     //richiama la funzione di aggiunta soldi
                     this.addCoin()
-                    this.save()
                 }
             },
             //funzione aggiunta soldi
@@ -217,44 +216,135 @@
                 }
             },
 
-            //prova salvataggio informazioni
-            save(){
-                //associa variabile a json stringfy
-                let prova = JSON.stringify(store.coin)
-                //salva variabile nel local storage
-                localStorage.setItem('coinStorage', prova)
-            },
-
             //prova caricamento automatico
             load(){
-                //associa variabile dal local storage
-                let prova = localStorage.getItem('coinStorage')
-                //trasforma da json
-                let prova2 = JSON.parse(prova)
-                //associa a variabile dello store
-                store.coin = prova2
-
+                let storage = localStorage
+                for (let key in storage) {
+                    if (storage.hasOwnProperty(key)) {
+                        let value = storage.getItem(key);
+                        store[key] = JSON.parse(value)
+                    }
+                }
             }
         },
         watch: {
             'store.autoAttack': {
-                immediate: true, // This will trigger the watcher immediately when the component is mounted
+                immediate: false, // This will trigger the watcher immediately when the component is mounted
                 handler(newValue) {
                     this.hitEnemyWhitDps(); // Call your function when totalDps changes
                 }
             },
-            //prova per usare il watch dallo store
             'store.coin': {
-                immediate: true,
+                immediate: false,
                 handler(newValue) {
-                    console.log('ciao'); // Call your function when totalDps changes
+                    let coin = JSON.stringify(store.coin)
+                    localStorage.setItem('coin', coin)
                 }
-
+            },
+            'store.coinEarnd': {
+                immediate: false,
+                handler(newValue) {
+                    let coinEarnd = JSON.stringify(store.coinEarnd)
+                    localStorage.setItem('coinEarnd', coinEarnd)
+                }
+            },
+            'store.coinValue': {
+                immediate: false,
+                handler(newValue) {
+                    let coinValue = JSON.stringify(store.coinValue)
+                    localStorage.setItem('coinValue', coinValue)
+                }
+            },
+            'store.clickValue': {
+                immediate: false,
+                handler(newValue) {
+                    let clickValue = JSON.stringify(store.clickValue)
+                    localStorage.setItem('clickValue', clickValue)
+                }
+            },
+            'store.clickLevel': {
+                immediate: false,
+                handler(newValue) {
+                    let clickLevel = JSON.stringify(store.clickLevel)
+                    localStorage.setItem('clickLevel', clickLevel)
+                }
+            },
+            'store.increaseClickValue': {
+                immediate: false,
+                handler(newValue) {
+                    let increaseClickValue = JSON.stringify(store.increaseClickValue)
+                    localStorage.setItem('increaseClickValue', increaseClickValue)
+                }
+            },
+            'store.clickPrice': {
+                immediate: false,
+                handler(newValue) {
+                    let clickPrice = JSON.stringify(store.clickPrice)
+                    localStorage.setItem('clickPrice', clickPrice)
+                }
+            },
+            'store.enemyMaxLife': {
+                immediate: false,
+                handler(newValue) {
+                    let enemyMaxLife = JSON.stringify(store.enemyMaxLife)
+                    localStorage.setItem('enemyMaxLife', enemyMaxLife)
+                }
+            },
+            'store.ActualStage': {
+                immediate: false,
+                handler(newValue) {
+                    let ActualStage = JSON.stringify(store.ActualStage)
+                    localStorage.setItem('ActualStage', ActualStage)
+                }
+            },
+            'store.AcutalFloor': {
+                immediate: false,
+                handler(newValue) {
+                    let AcutalFloor = JSON.stringify(store.AcutalFloor)
+                    localStorage.setItem('AcutalFloor', AcutalFloor)
+                }
+            },
+            'store.ActualEnemies': {
+                immediate: false,
+                handler(newValue) {
+                    let ActualEnemies = JSON.stringify(store.ActualEnemies)
+                    localStorage.setItem('ActualEnemies', ActualEnemies)
+                }
+            },
+            'store.MaxEnemies': {
+                immediate: false,
+                handler(newValue) {
+                    let MaxEnemies = JSON.stringify(store.MaxEnemies)
+                    localStorage.setItem('MaxEnemies', MaxEnemies)
+                }
+            },
+            'store.totalDps': {
+                immediate: false,
+                handler(newValue) {
+                    let totalDps = JSON.stringify(store.totalDps)
+                    localStorage.setItem('totalDps', totalDps)
+                }
+            },
+            'store.autoAttack': {
+                immediate: false,
+                handler(newValue) {
+                    let autoAttack = JSON.stringify(store.autoAttack)
+                    localStorage.setItem('autoAttack', autoAttack)
+                }
+            },
+            'store.allies': {
+                deep: true,
+                immediate: false, 
+                handler(newAllies, oldAllies) {
+                    let allies = JSON.stringify(store.allies)
+                    localStorage.setItem('allies', allies)
+                }
             }
         },
         created() {
+            // localStorage.clear()
             this.load()
-            console.log(store)
+            store.enemyLife = store.enemyMaxLife
         }
     }
 
