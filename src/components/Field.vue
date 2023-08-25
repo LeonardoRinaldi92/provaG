@@ -55,6 +55,7 @@
                     store.enemyLife  = store.enemyLife - store.clickValue
                     //richiama la funzione di aggiunta soldi
                     this.addCoin()
+                    this.save()
                 }
             },
             //funzione aggiunta soldi
@@ -108,13 +109,6 @@
                         store.ActualStage ++
                     }
 
-                    //determiniamo se quello che abbiamo sconfitto è un mostro qualsiasi
-                    if((!store.ActualEnemies == 10 && store.ActualStage == 10) || !(store.ActualEnemies == 10)){
-                        //aggiubgi ai soldi il valore fisso di guadagno
-                        store.coin = Math.round(store.coin + store.coinValue)
-                        console.log('guadagno qui')
-                        store.coinEarnd += store.coin - actualcoin
-                    }
                 }
                 //determiniamo se siamo a un boss
                 else {
@@ -169,6 +163,7 @@
                 }
                 return price
             },
+
             levelUpAlly(ally){
                 let oldDps = ally.Dps
                 let addDps = null
@@ -208,6 +203,7 @@
                     }
                 }
             },
+
             hitEnemyWhitDps(){
                 if(store.totalDps !== 0){
                     store.allies.forEach( ally => {
@@ -219,6 +215,25 @@
                         }
                     })
                 }
+            },
+
+            //prova salvataggio informazioni
+            save(){
+                //associa variabile a json stringfy
+                let prova = JSON.stringify(store.coin)
+                //salva variabile nel local storage
+                localStorage.setItem('coinStorage', prova)
+            },
+
+            //prova caricamento automatico
+            load(){
+                //associa variabile dal local storage
+                let prova = localStorage.getItem('coinStorage')
+                //trasforma da json
+                let prova2 = JSON.parse(prova)
+                //associa a variabile dello store
+                store.coin = prova2
+
             }
         },
         watch: {
@@ -228,6 +243,9 @@
                     this.hitEnemyWhitDps(); // Call your function when totalDps changes
                 }
             }
+        },
+        created() {
+            this.load()
         }
     }
 
