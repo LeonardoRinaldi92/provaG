@@ -334,7 +334,15 @@
                     let allies = JSON.stringify(store.allies)
                     localStorage.setItem('allies', allies)
                 }
-            }
+            },
+            'store.autoclickerTimes': {
+                deep: true,
+                immediate: false, 
+                handler(newValue) {
+                    let autoclickerTimes = JSON.stringify(store.autoclickerTimes)
+                    localStorage.setItem('autoclickerTimes', autoclickerTimes)
+                }
+            },
         },
         created() {
             localStorage.clear()
@@ -372,7 +380,10 @@
                                 <Enemy/>
                             </div>
                         </div>
-                        <autoclicker/>
+                        <div  @mouseenter="this.disableClickAtk = true" @mouseleave="this.disableClickAtk = false">
+
+                            <autoclicker />
+                        </div>
                     </div>
                 </div>
                 <div class="col-4 h-100" style="background-color: rgb(190, 202, 120);">
