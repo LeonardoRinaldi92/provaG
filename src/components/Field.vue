@@ -382,7 +382,7 @@
                         </div>
                         <div  @mouseenter="this.disableClickAtk = true" @mouseleave="this.disableClickAtk = false">
 
-                            <autoclicker />
+                            <autoclicker v-if="(store.clickLevel >= 10)"/>
                         </div>
                     </div>
                 </div>
