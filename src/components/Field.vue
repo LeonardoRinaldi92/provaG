@@ -3,12 +3,14 @@
     import Enemy from './Enemy.vue';
     import Timer from './Timer.vue';
     import EnemiesMap from './EnemiesMap.vue';
+    import autoclicker from './autoclicker.vue';
     export default {
         name: 'Field',
         components: {
             Enemy,
             Timer,
-            EnemiesMap
+            EnemiesMap,
+            autoclicker
         },
         data() {
             return {
@@ -19,27 +21,21 @@
         methods: {
             //aumento vita dei mostri
             increaseEnemyLife(){
-                console.log('vita prima', store.enemyMaxLife)
                 //aumento vita x 8 nel caso sia un Boss di fine stage
                 if (store.ActualEnemies == 9 && store.ActualStage == 9){
                     store.enemyMaxLife *= 8
-                    console.log('aumento vita boss: ',store.enemyMaxLife)
                 //aumento vita nel caso sia un miniBoss 
                 }else if(store.ActualEnemies == 9 ) {
                     store.enemyMaxLife = store.enemyMaxLife * 4
-                    console.log('aumento vita miniboss: ',store.enemyMaxLife)
                 //reset della vita dei nemici dopo boss
                 }else if (store.ActualEnemies == 10 && store.ActualStage == 10 ){
                     store.enemyLife /= 7
-                    console.log('riduco vita boss: ',store.enemyMaxLife)
                     //reset della vita dei nemici dopo miniboss ma con aggiunta di un extra 30%
                 }else if(store.ActualEnemies == 10){
                     store.enemyMaxLife = store.enemyMaxLife/ 3
-                    console.log('riduco vita miniboss: ',store.enemyMaxLife)
                 //aumento classica di vita, dopo ogni nemico
                 }else {
                     store.enemyMaxLife*= 1.1
-                    console.log('aumento  vita: ', store.enemyMaxLife)
                 }
                 //rendi numero intero vita dei mostri
                 store.enemyMaxLife = Math.round(store.enemyMaxLife)
@@ -82,7 +78,6 @@
                     //in tutti gli altri casi
                     }else{
                         //aumento il valore fisso di vittoria del 5% 
-                        console.log('entro qui')
                         store.coin = Math.round(store.coin + store.coinValue)
                         store.coinEarnd += store.coin - actualcoin
                         store.coinValue*=1.05
@@ -344,6 +339,7 @@
         created() {
             // localStorage.clear()
             this.load()
+            this.hitEnemyWhitDps()
             store.enemyLife = store.enemyMaxLife
         }
     }
@@ -353,7 +349,7 @@
 <template>
     <div class="w-100 h-100">
         <div class="container-fluid h-100">
-            <div class="row h-100"  @click="hitEnemy()">
+            <div class="row h-100"  @click="hitEnemy()" id="fieldBase">
                 <div class="col-8 h-100" style="background-color: rgb(175, 201, 224);">
                     <div class="row justify-content-end">
                         <div class="col-4 text-end">
@@ -376,6 +372,7 @@
                                 <Enemy/>
                             </div>
                         </div>
+                        <autoclicker/>
                     </div>
                 </div>
                 <div class="col-4 h-100" style="background-color: rgb(190, 202, 120);">
