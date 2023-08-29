@@ -67,6 +67,9 @@ export default {
             return `${minutes.toString().padStart(2, '0')}.${seconds.toString().padStart(2, '0')}`;
         }
     },
+    mounted(){
+        this.startCountdown()
+    }
 }
 </script>
 
