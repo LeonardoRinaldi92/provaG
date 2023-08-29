@@ -19,6 +19,7 @@ export const store = reactive (
         totalDps : 0,
         autoAttack: false,
         autoclickerTimes: 600,
+        timePast : null,
         allies : [
             {
                 name: 'primo alleato',

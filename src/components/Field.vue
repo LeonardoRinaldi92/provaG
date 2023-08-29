@@ -220,7 +220,16 @@
                         store[key] = JSON.parse(value)
                     }
                 }
-            }
+                // let time = JSON.parse(localStorage.getItem('timeLeave'))
+                // console.log (localStorage.getItem('ciao'))
+                // store.timePast = Date.now() - time
+            },
+            // registraTempo(){
+            //     let ora = JSON.stringify(Date.now()) 
+            //     localStorage.setItem('timeLeave', ora)
+            //     let ciao = JSON.stringify('ciao')
+            //     localStorage.setItem('ciao', ciao)
+            // }
         },
         watch: {
             'store.autoAttack': {
@@ -345,7 +354,7 @@
             },
         },
         created() {
-            localStorage.clear()
+            // localStorage.clear()
             this.load()
             this.hitEnemyWhitDps()
             store.enemyLife = store.enemyMaxLife
