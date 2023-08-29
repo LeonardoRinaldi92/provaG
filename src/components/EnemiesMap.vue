@@ -18,8 +18,6 @@ export default {
                     <i class="fa-solid" :class="(index+1 == 10 && store.ActualStage == 10) ? 'fa-skull-crossbones' : 'fa-circle-dot'" style="font-size: 12px;"></i>
                 </div>
             </div>
-
         </div>
-        
     </div>
 </template>

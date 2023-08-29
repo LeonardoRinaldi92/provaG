@@ -337,7 +337,7 @@
             }
         },
         created() {
-            // localStorage.clear()
+            localStorage.clear()
             this.load()
             this.hitEnemyWhitDps()
             store.enemyLife = store.enemyMaxLife

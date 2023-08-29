@@ -18,19 +18,19 @@ export const store = reactive (
         timer: 30,
         totalDps : 0,
         autoAttack: false,
+        autoclickerTimes: 600,
         allies : [
             {
                 name: 'primo alleato',
                 priceToBuy: 500,
                 priceToLvlUp: 300,
                 increasePrice: 1.4,
-                startDps: 15,
+                startDps: 30,
                 increaseDps: 3,
                 atkSpd: 1000,
                 Dps: 15,
                 actualLevel: 1,
                 unlocked: false,
-
             }
         ],
         enemies : [

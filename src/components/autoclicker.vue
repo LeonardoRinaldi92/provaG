@@ -6,7 +6,8 @@ export default {
     data(){
         return {
             store,
-            isActive : true
+            isActive : false,
+            time: store.autoclickerTimes
         }
     },
     methods: {
@@ -34,16 +35,32 @@ export default {
                     counter++;
                 }
             }, interval);
+        },
+        countDown(){
+            window.setInterval(() => {
+            store.autoclickerTimes -= 1;
+            }, 1000);
         }
     },
     mounted(){
         this.startAutoclick()
-    }
+        this.countDown()
+    },
+    computed: {
+        formatTimer() {
+            const minutes = Math.floor(store.autoclickerTimes / 60);
+            const seconds = store.autoclickerTimes % 60;
+            return `${minutes.toString().padStart(2, '0')}.${seconds.toString().padStart(2, '0')}`;
+        }
+    },
 }
 </script>
 
 <template>
     <div>
         <i class="fa-solid fa-computer-mouse"></i>
+    </div>
+    <div>
+        {{ this.formatTimer }}
     </div>
 </template>
